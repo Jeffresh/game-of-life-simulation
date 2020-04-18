@@ -25,14 +25,9 @@ public class CellularAutomata2D implements Runnable
     private static int[][] matrix;
     private static  int[] actual_gen, next_gen;
     public static AtomicIntegerArray population_counter;
-    private static AtomicInteger hamming_distance_counter;
     private int [] local_population_counter;
-    private int local_hamming_distance_counter;
     private static LinkedList<Double>[] population;
-    private static LinkedList<Double> hamming;
-    private static LinkedList<Double> spatial_entropy;
-    private static double temporal_entropy;
-    private static int[] temporal_entropy_counter;
+
     public static MainCanvas canvasTemplateRef;
     public static AnalyticsMultiChart population_chart_ref;
     public int[][] getData() { return matrix; }
@@ -80,8 +75,6 @@ public class CellularAutomata2D implements Runnable
                     population_counter.getAndAdd(j,this.local_population_counter[j]);
                 }
 
-                hamming_distance_counter.addAndGet(this.local_hamming_distance_counter);
-
                 if(barrier.getParties() == 0)
                     barrier.reset();
 
@@ -100,9 +93,7 @@ public class CellularAutomata2D implements Runnable
                         population[j].add((double)population_counter.get(j));
                     }
                     population_counter = new AtomicIntegerArray(states_number);
-                    hamming.add((double)hamming_distance_counter.intValue());
-                    hamming_distance_counter = new AtomicInteger(0);
-                    spatial_entropy.add(computeEntropy(spatial_entropy_counter));
+
                     if(CellularAutomata2D.population_chart_ref != null)
                         CellularAutomata2D.population_chart_ref.plot();
                     changeRefs();
@@ -118,9 +109,6 @@ public class CellularAutomata2D implements Runnable
                     barrier.reset();
             }catch(Exception e){}
         }
-
-        if(this.task_number==1)
-        temporal_entropy = computeEntropy(temporal_entropy_counter);
 
     }
 
@@ -173,54 +161,6 @@ public class CellularAutomata2D implements Runnable
         return population;
     }
 
-    public LinkedList<Double> getHammingDistance(){
-        return hamming;
-    }
-
-    public LinkedList<Double> getEntropy(){
-        return spatial_entropy;
-    }
-
-    public Double getTemporalEntropy(){
-        return temporal_entropy;
-    }
-
-    public double computeEntropy(int[] population){
-        double entropy = 0.0;
-        for(int symbol: population){
-            double probability = (symbol+0.0)/cells_number;
-            if(probability !=0)
-                entropy += probability * Math.log(probability);
-        }
-
-        return  (entropy == 0)?0:(entropy*-1);
-    }
-
-    private int[] compute_rule() {
-
-        int decimal_rule = transition_function;
-        int size_binary_rule = (2*neighborhood_range+1)*states_number;
-        binary_rule  = new int[size_binary_rule];
-
-        for( int i = 0; i < size_binary_rule ; i++ )
-        {
-            binary_rule[i] = decimal_rule % states_number;
-            decimal_rule = decimal_rule / states_number;
-        }
-
-
-
-        StringBuilder cout= new StringBuilder(new String());
-        cout.append("| ");
-        for (int value : binary_rule) {
-            cout.append(value);
-            cout.append(" | ");
-        }
-        System.out.println(cout);
-        System.out.println(Arrays.toString(binary_rule));
-        return binary_rule;
-    }
-
     private void initializeState(ArrayList<BigInteger> random_generated) {
         for(BigInteger num: random_generated){
             matrix[num.intValue()%width][0] = num.intValue()%states_number;
@@ -238,8 +178,6 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.entropy_cell = entropy_cell;
 
         population_counter = new AtomicIntegerArray(states_number);
-        hamming_distance_counter = new AtomicInteger(0);
-        temporal_entropy_counter = new int[states_number];
 
         CellularAutomata2D.cells_number = cells_number;
         CellularAutomata2D.generations = generations;
@@ -251,12 +189,10 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.seed = seed;
 
         population = new LinkedList[states_number];
-        hamming = new LinkedList<Double>();
-        spatial_entropy = new LinkedList<Double>();
+
         for (int i = 0; i < states_number; i++) {
             population[i] = new LinkedList<Double>();
         }
-        compute_rule();
         handler.createEngines();
         randomInitializer = new RandomGenerator(seed);
 
@@ -277,7 +213,6 @@ public class CellularAutomata2D implements Runnable
                             seed, seed, seed, width);
             initializeState(random_generated);
         }
-        temporal_entropy_counter[actual_gen[entropy_cell]]++;
     }
 
     public static void changeRefs() {
@@ -301,7 +236,6 @@ public class CellularAutomata2D implements Runnable
     public  LinkedList<Double>[] nextGen(int actual_gen) {
 
         local_population_counter = new int[states_number];
-        local_hamming_distance_counter = 0;
 
         for (int i = 0; i < states_number; i++) {
             this.local_population_counter[i]=0;
@@ -344,12 +278,6 @@ public class CellularAutomata2D implements Runnable
             }
 
             local_population_counter[next_gen[i]]++;
-            if( CellularAutomata2D.actual_gen[i] != CellularAutomata2D.next_gen[i])
-                local_hamming_distance_counter++;
-
-            if(i == entropy_cell){
-                temporal_entropy_counter[CellularAutomata2D.next_gen[i]]++;
-            }
         }
 
         return population;
