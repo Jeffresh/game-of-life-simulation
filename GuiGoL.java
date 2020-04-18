@@ -26,10 +26,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static Map<String, JButton> gui_buttons = new LinkedHashMap<String, JButton>();
     public static Map<String, String> textfields_and_labels = new LinkedHashMap<>();
     private static JComboBox<String>  generator_list_combo_box;
-    private static String[] engine_generator_names  = {
-            "Basic","generator261a", "generator261b", "generator262", "generator263", "generatorFishmanAndMore1",
-            "generatorFishmanAndMore2", "generatorRandu","generatorCombinedWXY",
-    };
+    private static String[] engine_generator_names  = {"Random","Random Island", "Gliders gun"};
     private static String initializer_mode = "Basic";
 
 
@@ -180,15 +177,8 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static JLabel [] radio_button_labels = { new JLabel("Cilindric Frontier")};
 
     private static void initializeInputTextFieldsAndLabels(){
-//        textfields_and_labels.put("Cells number (width): ", "300");//2
-//        textfields_and_labels.put("Generations: ", "600");//3
-        textfields_and_labels.put("States number: ", "2");//1
-        textfields_and_labels.put("Neighborhood Range: ", "1");//4
-        textfields_and_labels.put("Transition function: ", "90");//5
-        textfields_and_labels.put("Seed: ", "1"); //0
-        textfields_and_labels.put("Cell (temporal entropy): ","300");
-
-
+        textfields_and_labels.put("Dimension (NxN): ", "300");//2
+        textfields_and_labels.put("Generations: ", "600");//3
         combobox_labels[0].setLabelFor(generator_list_combo_box);
     }
     private static void initializeButtonNames(){
@@ -364,19 +354,13 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     }
 
     public void deleteCanvasLabels( JLabel[] labels){
-
         if(label_numeric_var_value != null) canvas_template.remove(label_numeric_var_value);
         if(label_string_var_value != null) canvas_template.remove(label_string_var_value);
     }
-
-    private static int seed = 1;
-    private static int states_number = 2;
-    private static int neighborhood_range = 1;
-    private static int transition_function = 90;
+    
     private static int cfrontier = 0;
     private static int cells_number = 600;
     private static int generations = 600;
-    private static int cell_temporal_entropy = 300;
 
 
     public void actionPerformed( ActionEvent e) {
@@ -385,17 +369,17 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 //      frame.remove(window);
             value = 2;
             deleteCanvasLabels(input_variables_labels);
-            MainCanvas.task.initializer(cells_number, generations, states_number,
-                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-            canvas_template.updateCanvas();
+//            MainCanvas.task.initializer(cells_number, generations, states_number,
+//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
+//            canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
             value = 3;
             deleteCanvasLabels(input_variables_labels);
-            MainCanvas.task.initializer(cells_number, generations, states_number,
-                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-            canvas_template.updateCanvas();
+//            MainCanvas.task.initializer(cells_number, generations, states_number,
+//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
+//            canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
@@ -434,28 +418,21 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                 cfrontier = 1;
             else cfrontier = 0;
             System.out.println("Cfrontier "+cfrontier);
-
-            MainCanvas.task = new CellularAutomata2D();
-            MainCanvas.task.plug(canvas_template);
-            MainCanvas.task.initializer(cells_number, generations, states_number,
-                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-            MainCanvas.setDimensions(cells_number, generations);
-//            population_chart = new PopulationChart("Population Chart",
-//                    "Generations", "Cells Number");
-            if (population_chart != null){
-                population_chart.setRef(MainCanvas.task);
-                MainCanvas.task.plugPopulationChart(population_chart);
-                population_chart.createSeries();
-            }
+//
+//            MainCanvas.task = new CellularAutomata2D();
+//            MainCanvas.task.plug(canvas_template);
+//            MainCanvas.task.initializer(cells_number, generations, states_number,
+//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
+//            MainCanvas.setDimensions(cells_number, generations);
+//            if (population_chart != null){
+//                population_chart.setRef(MainCanvas.task);
+//                MainCanvas.task.plugPopulationChart(population_chart);
+//                population_chart.createSeries();
+//            }
 
             System.out.println("Cells number: "+cells_number);
             System.out.println("Generations: "+generations);
-            System.out.println("State number: "+states_number);
-            System.out.println("Neighborhood Range: "+ neighborhood_range);
-            System.out.println("Transition_function: "+ transition_function);
-            System.out.println("Seed: "+seed);
             System.out.println("Initializer mode: "+initializer_mode);
-            System.out.println("Cell Spatial Entropy: "+ cell_temporal_entropy);
 
 
             canvas_template.updateCanvas();
@@ -470,14 +447,8 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                         MainCanvas.task.caComputation(generations);
                         MainCanvas.task.plugPopulationChart(population_chart);
                         population_chart.setRef(MainCanvas.task);
-                        String message = "\"Temporal entropy of cell: "
-                                + cell_temporal_entropy +"\n"
-                                + "Temporal entropy value: "+MainCanvas.task.getTemporalEntropy();
                         JFrame dialog =  new JFrame();
                         dialog.setAlwaysOnTop(true);
-                        JOptionPane.showMessageDialog(dialog, message, "Dialog",
-                                JOptionPane.INFORMATION_MESSAGE);
-
                     }
                     catch(Exception ex){System.out.println("Worker exception");}
                     return null;
@@ -505,7 +476,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
         if(e.getSource() == input_variables_textfields[0]) {
             nump = input_variables_textfields[0].getText();
             string_var = nump;
-            states_number = Integer.parseInt(nump);
+            cells_number = Integer.parseInt(nump);
         }
 
         //Neighborhood Range
@@ -518,7 +489,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                         numeric_var = 0;
                         throw new Exception("Invalid Number");
                     }
-                    neighborhood_range = Integer.parseInt(nump);
+                    generations = Integer.parseInt(nump);
                 }
             }
             catch (Exception ex){
@@ -528,50 +499,12 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
-        //transition function
-        if(e.getSource() == input_variables_textfields[2]) {
-            nump = input_variables_textfields[2].getText();
-            string_var = nump;
-            transition_function = Integer.parseInt(nump);
-        }
-
-        //seed
-        if(e.getSource() == input_variables_textfields[3]) {
-            nump = input_variables_textfields[5].getText();
-            seed = Integer.parseInt(nump);
-        }
 
         if(e.getSource() == generator_list_combo_box) {
             JComboBox<String> cb = (JComboBox<String>)e.getSource();
             String op = (String)cb.getSelectedItem();
             assert op != null;
             initializer_mode = op;
-        }
-
-        if(e.getSource() == input_variables_textfields[0]) {
-            nump = input_variables_textfields[0].getText();
-            string_var = nump;
-            states_number = Integer.parseInt(nump);
-        }
-
-        //cell temporal entropy
-        try {
-            double nump_value;
-            if (e.getSource() == input_variables_textfields[4]) {
-                nump = input_variables_textfields[4].getText();
-                nump_value = Double.parseDouble(nump);
-                if (nump.equals("") || (nump_value < 0 || nump_value >=600)) {
-                    numeric_var = 0;
-                    throw new Exception("Invalid Number");
-                }
-                cell_temporal_entropy = Integer.parseInt(nump);
-            }
-        }
-        catch (Exception ex){
-            String message = "\"Invalid Cell Number\"\n"
-                    + "Enter a number between 0 and 599\n" ;
-            JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
-                    JOptionPane.ERROR_MESSAGE);
         }
     }
     
