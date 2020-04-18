@@ -177,7 +177,8 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static JLabel [] radio_button_labels = { new JLabel("Cilindric Frontier")};
 
     private static void initializeInputTextFieldsAndLabels(){
-        textfields_and_labels.put("Dimension (NxN): ", "300");//2
+        // Todo bug if dimension is not equal to 600 fix main canvas
+        textfields_and_labels.put("Dimension (NxN): ", "600");//2
         textfields_and_labels.put("Generations: ", "600");//3
         combobox_labels[0].setLabelFor(generator_list_combo_box);
     }
@@ -369,17 +370,15 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 //      frame.remove(window);
             value = 2;
             deleteCanvasLabels(input_variables_labels);
-//            MainCanvas.task.initializer(cells_number, generations, states_number,
-//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-//            canvas_template.updateCanvas();
+            MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
+            canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(0).getItem(1)) {
             value = 3;
             deleteCanvasLabels(input_variables_labels);
-//            MainCanvas.task.initializer(cells_number, generations, states_number,
-//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-//            canvas_template.updateCanvas();
+            MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
+            canvas_template.updateCanvas();
         }
 
         if(e.getSource() == nav_bar.getMenu(1).getItem(0)){
@@ -418,17 +417,15 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                 cfrontier = 1;
             else cfrontier = 0;
             System.out.println("Cfrontier "+cfrontier);
-//
-//            MainCanvas.task = new CellularAutomata2D();
-//            MainCanvas.task.plug(canvas_template);
-//            MainCanvas.task.initializer(cells_number, generations, states_number,
-//                    neighborhood_range, transition_function, seed, cfrontier , initializer_mode, cell_temporal_entropy);
-//            MainCanvas.setDimensions(cells_number, generations);
-//            if (population_chart != null){
-//                population_chart.setRef(MainCanvas.task);
-//                MainCanvas.task.plugPopulationChart(population_chart);
-//                population_chart.createSeries();
-//            }
+            MainCanvas.task = new CellularAutomata2D();
+            MainCanvas.task.plug(canvas_template);
+            MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
+            MainCanvas.setDimensions(cells_number, generations);
+            if (population_chart != null){
+                population_chart.setRef(MainCanvas.task);
+                MainCanvas.task.plugPopulationChart(population_chart);
+                population_chart.createSeries();
+            }
 
             System.out.println("Cells number: "+cells_number);
             System.out.println("Generations: "+generations);

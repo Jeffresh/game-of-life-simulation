@@ -21,9 +21,6 @@ public class AnalyticsMultiChart {
     public CellularAutomata2D CA1Dref;
     private  String chart_title;
     private  LinkedList<Double>[] fifo_population;
-    private  LinkedList<Double>[] fifo_hamming;
-    private  LinkedList<Double>[] fifo_entropy;
-
 
     private XYChart createChart(String chart_title, String x_axis_name, String y_axis_name) {
         XYChart chart;
@@ -79,31 +76,10 @@ public class AnalyticsMultiChart {
 
     }
 
-    public void getDataHamming() {
-        fifo_hamming = new LinkedList[1];
-        fifo_hamming[0] = CA1Dref.getHammingDistance();
-        double[]array = new double[fifo_hamming[0].size()];
-        for (int i = 0; i < fifo_hamming[0].size(); i++){
-            array[i] = fifo_hamming[0].get(i)+0.0;
-            hamming_chart.updateXYSeries("Hamming distance",null, array, null);
-        }
-    }
 
-    public void getDataSpatialEntropy() {
-        fifo_entropy = new LinkedList[1];
-        fifo_entropy[0] = CA1Dref.getEntropy();
-        double[]array = new double[fifo_entropy[0].size()];
-        for (int i = 0; i < fifo_entropy[0].size(); i++){
-            array[i] = fifo_entropy[0].get(i)+0.0;
-            entropy_chart.updateXYSeries("Spatial Entropy",null, array, null);
-        }
-    }
 
     public void plot() {
         getDataPopulation();
-        getDataHamming();
-        getDataSpatialEntropy();
-
         population_chart_panel.revalidate();
         population_chart_panel.repaint();
         hamming_chart_panel.revalidate();

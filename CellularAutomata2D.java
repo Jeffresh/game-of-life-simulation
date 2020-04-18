@@ -33,23 +33,18 @@ public class CellularAutomata2D implements Runnable
     public int[][] getData() { return matrix; }
     public void plug(MainCanvas ref) { canvasTemplateRef = ref; }
     public void plugPopulationChart(AnalyticsMultiChart ref) { population_chart_ref = ref;}
-    public static int entropy_cell;
 
     private static int width, height;
 
     public static int states_number = 2;
-    private static int neighborhood_range = 1;
-    private static int transition_function = 1;
     private static int cfrontier = 0;
     private static  RandomGenerator randomInitializer;
     private static EngineGenerator handler = new EngineGenerator();
     private static String random_engine;
-    private static int seq_len;
     private static int seed;
     private static int cells_number;
     public static int generations;
 
-    private static int[] binary_rule;
     private int task_number;
     private static int total_tasks;
     private static CyclicBarrier barrier = null;
@@ -168,25 +163,19 @@ public class CellularAutomata2D implements Runnable
         }
     }
 
-    public void initializer (int cells_number, int generations, int states_number,
-                             int neighborhood_range, int transition_function, int seed,
-                             int cfrontier , String random_engine, int entropy_cell) {
+    public void initializer (int cells_number, int generations, int cfrontier, String random_engine ) {
         width = cells_number;
         height = generations;
+
         actual_gen = new int[width]; next_gen = new int[width];
         matrix = new int[height][width];
-        CellularAutomata2D.entropy_cell = entropy_cell;
 
         population_counter = new AtomicIntegerArray(states_number);
 
         CellularAutomata2D.cells_number = cells_number;
         CellularAutomata2D.generations = generations;
-        CellularAutomata2D.states_number = states_number;
-        CellularAutomata2D.neighborhood_range = neighborhood_range;
-        CellularAutomata2D.transition_function = transition_function;
         CellularAutomata2D.cfrontier = cfrontier;
         CellularAutomata2D.random_engine = random_engine;
-        CellularAutomata2D.seed = seed;
 
         population = new LinkedList[states_number];
 
@@ -245,37 +234,38 @@ public class CellularAutomata2D implements Runnable
             if(abort)
                 break;
             int j = 0;
-            if(cfrontier == 0)
-                j =(i + neighborhood_range) % width;
-            else
-                j = (i + neighborhood_range >= width) ?
-                        i + neighborhood_range  - width : i + neighborhood_range ;
+
+//            if(cfrontier == 0)
+//                j =(i + neighborhood_range) % width;
+//            else
+//                j = (i + neighborhood_range >= width) ?
+//                        i + neighborhood_range  - width : i + neighborhood_range ;
 
             int irule = 0;
             int exp = 0;
 
-            while(exp < neighborhood_range *2 +1){
-                if(cfrontier == 0) {
-                    if (j < cells_number && j > 0)
-                        irule = irule + CellularAutomata2D.actual_gen[j] * (int) Math.pow(states_number, exp);
-                    exp++;
-                    j = (j == 0) ? 0 : j - 1;
-                }
-                else {
-                    irule = irule + CellularAutomata2D.actual_gen[j] * (int)Math.pow(states_number,exp);
-                    exp ++;
-                    j = ( j== 0) ? ( j - 1 + cells_number) : j - 1;
-                }
-            }
+//            while(exp < neighborhood_range *2 +1){
+//                if(cfrontier == 0) {
+//                    if (j < cells_number && j > 0)
+//                        irule = irule + CellularAutomata2D.actual_gen[j] * (int) Math.pow(states_number, exp);
+//                    exp++;
+//                    j = (j == 0) ? 0 : j - 1;
+//                }
+//                else {
+//                    irule = irule + CellularAutomata2D.actual_gen[j] * (int)Math.pow(states_number,exp);
+//                    exp ++;
+//                    j = ( j== 0) ? ( j - 1 + cells_number) : j - 1;
+//                }
+//            }
 
-            if (irule >= binary_rule.length) {
-                CellularAutomata2D.next_gen[i] = 0;
-                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
-            }
-            else {
-                CellularAutomata2D.next_gen[i] = binary_rule[irule];
-                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
-            }
+//            if (irule >= binary_rule.length) {
+//                CellularAutomata2D.next_gen[i] = 0;
+//                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
+//            }
+//            else {
+//                CellularAutomata2D.next_gen[i] = binary_rule[irule];
+//                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
+//            }
 
             local_population_counter[next_gen[i]]++;
         }

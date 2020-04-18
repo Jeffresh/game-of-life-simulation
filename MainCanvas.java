@@ -70,8 +70,6 @@ class MainCanvas extends JPanel {
                     color = Color.YELLOW;
                 else if(matrix[x][y] == 4)
                     color = Color.PINK;
-
-
                 else
                     color = Color.RED;
 
