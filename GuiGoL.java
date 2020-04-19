@@ -27,7 +27,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     public static Map<String, String> textfields_and_labels = new LinkedHashMap<>();
     private static JComboBox<String>  generator_list_combo_box;
     private static String[] engine_generator_names  = {"Random","Random Island", "Gliders gun"};
-    private static String initializer_mode = "Basic";
+    private static String initializer_mode = "Random";
 
 
 
@@ -178,7 +178,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 
     private static void initializeInputTextFieldsAndLabels(){
         // Todo bug if dimension is not equal to 600 fix main canvas
-        textfields_and_labels.put("Dimension (NxN): ", "600");//2
+        textfields_and_labels.put("Dimension (NxN): ", "200");//2
         textfields_and_labels.put("Generations: ", "600");//3
         combobox_labels[0].setLabelFor(generator_list_combo_box);
     }
