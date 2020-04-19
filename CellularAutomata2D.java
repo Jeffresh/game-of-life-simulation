@@ -38,9 +38,6 @@ public class CellularAutomata2D implements Runnable
 
     public static int states_number = 2;
     private static int cfrontier = 0;
-    private static  RandomGenerator randomInitializer;
-    private static EngineGenerator handler = new EngineGenerator();
-    private static String random_engine;
     private static int seed;
     private static int cells_number;
     public static int generations;
@@ -157,10 +154,7 @@ public class CellularAutomata2D implements Runnable
     }
 
     private void initializeState(ArrayList<BigInteger> random_generated) {
-        for(BigInteger num: random_generated){
-            matrix[num.intValue()%width][0] = num.intValue()%states_number;
-            actual_gen[num.intValue()%width] = num.intValue() % states_number;
-        }
+
     }
 
     public void initializer (int cells_number, int generations, int cfrontier, String random_engine ) {
@@ -175,33 +169,13 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.cells_number = cells_number;
         CellularAutomata2D.generations = generations;
         CellularAutomata2D.cfrontier = cfrontier;
-        CellularAutomata2D.random_engine = random_engine;
 
         population = new LinkedList[states_number];
 
         for (int i = 0; i < states_number; i++) {
             population[i] = new LinkedList<Double>();
         }
-        handler.createEngines();
-        randomInitializer = new RandomGenerator(seed);
 
-        if (random_engine.equals("Basic")) {
-            matrix[width / 2][0] = 1;
-            actual_gen[width/2] = 1;
-        }
-        else if(!random_engine.equals("generatorCombinedWXY")) {
-            ArrayList<BigInteger> random_generated = randomInitializer.
-                    getRandomSequence(handler.engines.get(random_engine), seed, width);
-            initializeState(random_generated);
-        }
-        else {
-            ArrayList<BigInteger> random_generated = randomInitializer.
-                    getRandomSequenceCombined(handler.combined_engines.get(random_engine),
-                            handler.engines.get("generatorCombinedW"), handler.engines.get("generatorCombinedY"),
-                            handler.engines.get("generatorCombinedX"),
-                            seed, seed, seed, width);
-            initializeState(random_generated);
-        }
     }
 
     public static void changeRefs() {
