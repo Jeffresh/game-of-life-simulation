@@ -233,6 +233,12 @@ public class CellularAutomata2D implements Runnable
         return population;
     }
 
+
+    public int evalueCell(int i, int j){
+        int cellsAlive = calculeVonNeumannNeihborhood(i,j);
+        return transitionFunction(cellsAlive, i, j);
+    }
+
     public  LinkedList<Double>[] nextGen(int actual_gen) {
 
         local_population_counter = new int[states_number];
