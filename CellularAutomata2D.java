@@ -2,6 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -42,6 +43,7 @@ public class CellularAutomata2D implements Runnable
     private static int cells_number;
     public static int generations;
     private static String initializerMode;
+    private static Random randomGenerator;
 
     private int task_number;
     private static int total_tasks;
@@ -155,6 +157,10 @@ public class CellularAutomata2D implements Runnable
     }
 
     private static void randomInitializer() {
+        int nCells = height/2;
+        for(int i=0; i < nCells; i++) {
+            matrix[randomGenerator.nextInt(height)][randomGenerator.nextInt(height)]=1;
+        }
 
     }
 
@@ -183,6 +189,8 @@ public class CellularAutomata2D implements Runnable
     }
 
     public void initializer (int cells_number, int generations, int cfrontier, String initializerMode ) {
+        randomGenerator = new Random();
+
         width = cells_number;
         height = cells_number;
 
