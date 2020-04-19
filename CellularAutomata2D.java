@@ -248,7 +248,7 @@ public class CellularAutomata2D implements Runnable
     }
 
 
-    public int evalueCell(int i, int j){
+    public int getCellValue(int i, int j){
         int cellsAlive = computeVonNeumannNeighborhood(i,j);
         return transitionFunction(cellsAlive, i, j);
     }
