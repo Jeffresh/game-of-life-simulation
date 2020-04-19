@@ -1,13 +1,9 @@
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
@@ -24,7 +20,7 @@ public class CellularAutomata2D implements Runnable
 {
 
     private static int[][] matrix;
-    private static  int[] actual_gen, next_gen;
+    private static  int[][] actualGen, nextGen;
     public static AtomicIntegerArray population_counter;
     private int [] local_population_counter;
     private static LinkedList<Double>[] population;
@@ -194,7 +190,7 @@ public class CellularAutomata2D implements Runnable
         width = cells_number;
         height = cells_number;
 
-        actual_gen = new int[width]; next_gen = new int[width];
+        actualGen = new int[width][width]; nextGen = new int[width][width];
         matrix = new int[height][width];
 
         population_counter = new AtomicIntegerArray(states_number);
@@ -216,9 +212,9 @@ public class CellularAutomata2D implements Runnable
     }
 
     public static void changeRefs() {
-        int[] aux = actual_gen;
-        actual_gen = next_gen;
-        next_gen = aux;
+        int[][] aux = actualGen;
+        actualGen = nextGen;
+        nextGen = aux;
     }
 
     public static void stop() {
@@ -238,6 +234,18 @@ public class CellularAutomata2D implements Runnable
         return cellsAlive;
     }
 
+    private int transitionFunction(int cellsAlive, int i, int j) {
+        int transitionFunctionValue;
+
+        if(cellsAlive <2 || cellsAlive >3)
+            transitionFunctionValue = 0;
+        else if( cellsAlive == 2)
+            transitionFunctionValue = actualGen[i][j];
+        else
+            transitionFunctionValue = 1;
+
+        return transitionFunctionValue;
+    }
 
 
     public int evalueCell(int i, int j){
@@ -290,7 +298,7 @@ public class CellularAutomata2D implements Runnable
 //                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
 //            }
 
-            local_population_counter[next_gen[i]]++;
+            local_population_counter[nextGen[i][j]]++;
         }
 
         return population;
