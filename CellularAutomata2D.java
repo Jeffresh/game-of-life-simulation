@@ -154,16 +154,28 @@ public class CellularAutomata2D implements Runnable
         return population;
     }
 
+    private static void randomInitializer() {
+
+    }
+
+    private static void randomIslandInitializer() {
+
+    }
+
+    private static void gliderGunInitializer() {
+
+    }
+
     private static void initializeState(String initializerMode) {
         switch (initializerMode){
             case "Random":
-                System.out.print("Random");
+                randomInitializer();
                 break;
             case "Random Island":
-                System.out.print("Random Island");
+                randomIslandInitializer();
                 break;
             case "Gliders gun":
-                System.out.print("Gliders gun");
+                gliderGunInitializer();
                 break;
             default:
 
@@ -185,13 +197,13 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.initializerMode = initializerMode;
 
         population = new LinkedList[states_number];
-        initializeState(initializerMode);
+        CellularAutomata2D.initializeState(initializerMode);
+
 
         for (int i = 0; i < states_number; i++) {
             population[i] = new LinkedList<Double>();
         }
 
-        CellularAutomata2D.initializeState(initializerMode);
 
     }
 
