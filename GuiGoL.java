@@ -305,7 +305,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
         frame.setJMenuBar(new GuiGoL().createNavBar());
 
         int xMax = cells_number;
-        int yMax = generations;
+        int yMax = cells_number;
         canvas_template = new MainCanvas(xMax, yMax);
         canvas_template.setOpaque(true);
         canvas_template.setDoubleBuffered(false);
@@ -420,7 +420,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
             MainCanvas.task = new CellularAutomata2D();
             MainCanvas.task.plug(canvas_template);
             MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
-            MainCanvas.setDimensions(cells_number, generations);
+            MainCanvas.setDimensions(cells_number, cells_number);
             if (population_chart != null){
                 population_chart.setRef(MainCanvas.task);
                 MainCanvas.task.plugPopulationChart(population_chart);

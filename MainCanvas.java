@@ -84,6 +84,6 @@ class MainCanvas extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (task.getData() != null)
-            g.drawImage(GenerateImage(), 500 - 600 / 2, 500 - 600 / 2, 600, 600, null);
+            g.drawImage(GenerateImage(), 500 - xMax / 2, 500 - yMax / 2, xMax, yMax, null);
     }
 }

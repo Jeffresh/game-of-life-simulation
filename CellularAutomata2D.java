@@ -165,7 +165,7 @@ public class CellularAutomata2D implements Runnable
 
     public void initializer (int cells_number, int generations, int cfrontier, String random_engine ) {
         width = cells_number;
-        height = generations;
+        height = cells_number;
 
         actual_gen = new int[width]; next_gen = new int[width];
         matrix = new int[height][width];
