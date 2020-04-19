@@ -41,6 +41,7 @@ public class CellularAutomata2D implements Runnable
     private static int seed;
     private static int cells_number;
     public static int generations;
+    private static String initializerMode;
 
     private int task_number;
     private static int total_tasks;
@@ -153,11 +154,23 @@ public class CellularAutomata2D implements Runnable
         return population;
     }
 
-    private void initializeState(ArrayList<BigInteger> random_generated) {
+    private static void initializeState(String initializerMode) {
+        switch (initializerMode){
+            case "Random":
+                System.out.print("Random");
+                break;
+            case "Random Island":
+                System.out.print("Random Island");
+                break;
+            case "Gliders gun":
+                System.out.print("Gliders gun");
+                break;
+            default:
 
+        }
     }
 
-    public void initializer (int cells_number, int generations, int cfrontier, String random_engine ) {
+    public void initializer (int cells_number, int generations, int cfrontier, String initializerMode ) {
         width = cells_number;
         height = cells_number;
 
@@ -169,12 +182,16 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.cells_number = cells_number;
         CellularAutomata2D.generations = generations;
         CellularAutomata2D.cfrontier = cfrontier;
+        CellularAutomata2D.initializerMode = initializerMode;
 
         population = new LinkedList[states_number];
+        initializeState(initializerMode);
 
         for (int i = 0; i < states_number; i++) {
             population[i] = new LinkedList<Double>();
         }
+
+        CellularAutomata2D.initializeState(initializerMode);
 
     }
 
