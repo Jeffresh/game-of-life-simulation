@@ -12,11 +12,7 @@ import org.knowm.xchart.*;
 public class AnalyticsMultiChart {
 
     public  JPanel population_chart_panel;
-    public  JPanel hamming_chart_panel;
-    public  JPanel entropy_chart_panel;
     public  XYChart population_chart;
-    public  XYChart hamming_chart;
-    public  XYChart entropy_chart;
     public  JFrame chart_frame;
     public CellularAutomata2D CA1Dref;
     private  String chart_title;
@@ -34,14 +30,9 @@ public class AnalyticsMultiChart {
         return chart;
     }
 
-
     AnalyticsMultiChart(String chart_title, String x_axis_name, String y_axis_name) {
         this.chart_title = chart_title;
-
         population_chart = createChart(chart_title, x_axis_name, y_axis_name);
-        hamming_chart = createChart("Hamming Distance", "Distance", y_axis_name);
-        entropy_chart = createChart("Spatial Entropy", "Entropy", y_axis_name);
-
     }
 
     public void setRef(CellularAutomata2D ref) {
@@ -65,42 +56,24 @@ public class AnalyticsMultiChart {
             population_chart.addSeries("state "+(i),new double[] { 0 }, new double[] { 0 })
                     .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         }
-
-        hamming_chart.addSeries("Hamming distance",new double[] { 0 }, new double[] { 0 })
-                .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-
-
-
-        entropy_chart.addSeries("Spatial Entropy",new double[] { 0 }, new double[] { 0 })
-                .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-
     }
-
-
 
     public void plot() {
         getDataPopulation();
         population_chart_panel.revalidate();
         population_chart_panel.repaint();
-        hamming_chart_panel.revalidate();
-        hamming_chart_panel.repaint();
-        entropy_chart_panel.revalidate();
-        entropy_chart_panel.repaint();
     }
 
     public void show() {
         population_chart_panel = new XChartPanel(population_chart);
-        hamming_chart_panel = new XChartPanel(hamming_chart);
-        entropy_chart_panel = new XChartPanel(entropy_chart);
+
         chart_frame = new JFrame("Charts");
-        GridLayout layout = new GridLayout(3,1);
+        GridLayout layout = new GridLayout(1,1);
         chart_frame.setLayout(layout);
         chart_frame.add(population_chart_panel);
-        chart_frame.add(hamming_chart_panel);
-        chart_frame.add(entropy_chart_panel);
+
         chart_frame.setSize(600,600);
-        chart_frame.setMaximumSize(new Dimension(100,600));
-        chart_frame.setMaximumSize(new Dimension(100,600));
+        chart_frame.setMaximumSize(new Dimension(200,600));
 
 
         chart_frame.setAlwaysOnTop(true);

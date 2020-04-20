@@ -24,9 +24,9 @@ public class CellularAutomata2D implements Runnable
     public static AtomicIntegerArray population_counter;
     private int [] local_population_counter;
     private static LinkedList<Double>[] population;
-
     public static MainCanvas canvasTemplateRef;
     public static AnalyticsMultiChart population_chart_ref;
+
     public int[][] getData() { return matrix; }
     public void plug(MainCanvas ref) { canvasTemplateRef = ref; }
     public void plugPopulationChart(AnalyticsMultiChart ref) { population_chart_ref = ref;}
