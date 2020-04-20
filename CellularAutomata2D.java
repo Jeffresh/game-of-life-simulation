@@ -27,7 +27,7 @@ public class CellularAutomata2D implements Runnable
     public static MainCanvas canvasTemplateRef;
     public static AnalyticsMultiChart population_chart_ref;
 
-    public int[][] getData() { return matrix; }
+    public int[][] getData() { return actualGen; }
     public void plug(MainCanvas ref) { canvasTemplateRef = ref; }
     public void plugPopulationChart(AnalyticsMultiChart ref) { population_chart_ref = ref;}
 
@@ -77,10 +77,7 @@ public class CellularAutomata2D implements Runnable
                     canvasTemplateRef.repaint();
                     Thread.sleep(0,10);
 
-                    int[] spatial_entropy_counter = new int [states_number];
-
                     for (int j = 0; j < states_number; j++) {
-                        spatial_entropy_counter[j] = population_counter.get(j);
                         population[j].add((double)population_counter.get(j));
                     }
                     population_counter = new AtomicIntegerArray(states_number);
@@ -153,9 +150,9 @@ public class CellularAutomata2D implements Runnable
     }
 
     private static void randomInitializer() {
-        int nCells = height/2;
+        int nCells = height*height-100;
         for(int i=0; i < nCells; i++) {
-            matrix[randomGenerator.nextInt(height)][randomGenerator.nextInt(height)]=1;
+            actualGen[randomGenerator.nextInt(height)][randomGenerator.nextInt(height)]=1;
         }
 
     }

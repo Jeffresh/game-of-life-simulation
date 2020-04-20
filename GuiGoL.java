@@ -422,6 +422,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
             MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
             MainCanvas.setDimensions(cells_number, cells_number);
             if (population_chart != null){
+
                 population_chart.setRef(MainCanvas.task);
                 MainCanvas.task.plugPopulationChart(population_chart);
                 population_chart.createSeries();
