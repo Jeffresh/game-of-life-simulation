@@ -358,7 +358,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
         if(label_numeric_var_value != null) canvas_template.remove(label_numeric_var_value);
         if(label_string_var_value != null) canvas_template.remove(label_string_var_value);
     }
-    
+
     private static int cfrontier = 0;
     private static int cells_number = 600;
     private static int generations = 600;
@@ -422,7 +422,6 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
             MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
             MainCanvas.setDimensions(cells_number, cells_number);
             if (population_chart != null){
-
                 population_chart.setRef(MainCanvas.task);
                 MainCanvas.task.plugPopulationChart(population_chart);
                 population_chart.createSeries();

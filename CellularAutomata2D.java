@@ -163,6 +163,32 @@ public class CellularAutomata2D implements Runnable
 
     //TODO: Implement random Island initializer
     private static void randomIslandInitializer() {
+        int nIsland= 20;
+        int radius = 10;
+
+        for(int n =0 ; n < nIsland; n++) {
+            int cx = randomGenerator.nextInt(height);
+            int cy = randomGenerator.nextInt(height);
+
+            for(int y = 0; y <height;y++)
+                for(int x = 0; x<height;x++)
+                {
+                    int dx = cx - x;
+                    int dy = cy -y;
+
+                    if ((dx*dx) +(dy*dy) <= radius*radius && actualGen[x][y] ==0)
+                    {
+                        if(randomGenerator.nextInt(2)<1) {
+                            actualGen[x][y] = 1;
+                            initialPopulation[1]++;
+                        }else{
+                            initialPopulation[0]++;
+                        }
+                    }
+                }
+
+        }
+
 
     }
 
