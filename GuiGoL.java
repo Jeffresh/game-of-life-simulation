@@ -177,7 +177,6 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 //    private static JLabel [] radio_button_labels = { new JLabel("Cilindric Frontier")};
 
     private static void initializeInputTextFieldsAndLabels(){
-        // Todo bug if dimension is not equal to 600 fix main canvas
         textfields_and_labels.put("Dimension (NxN): ", "200");//2
         textfields_and_labels.put("Generations: ", "600");//3
         combobox_labels[0].setLabelFor(generator_list_combo_box);

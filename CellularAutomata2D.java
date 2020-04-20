@@ -161,7 +161,6 @@ public class CellularAutomata2D implements Runnable
 
     }
 
-    //TODO: Implement random Island initializer
     private static void randomIslandInitializer() {
         int nIsland= 20;
         int radius = 10;
