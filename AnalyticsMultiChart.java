@@ -5,6 +5,8 @@ import org.knowm.xchart.XYChart;
 import javax.swing.*;
 
 import org.knowm.xchart.*;
+import org.knowm.xchart.style.markers.None;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 
 /**
  * Creates a real-time chart using SwingWorker
@@ -54,7 +56,7 @@ public class AnalyticsMultiChart {
     public void createSeries() {
         for (int i = 0; i < CA1Dref.states_number ; i++) {
             population_chart.addSeries("state "+(i),new double[] { 0 }, new double[] { 0 })
-                    .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+                    .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line).setMarker(SeriesMarkers.NONE);
         }
     }
 
