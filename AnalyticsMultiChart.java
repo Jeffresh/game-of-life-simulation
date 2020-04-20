@@ -54,10 +54,11 @@ public class AnalyticsMultiChart {
     }
 
     public void createSeries() {
-        for (int i = 0; i < CA1Dref.states_number ; i++) {
-            population_chart.addSeries("state "+(i),new double[] { 0 }, new double[] { 0 })
-                    .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line).setMarker(SeriesMarkers.NONE);
-        }
+       if(population_chart.getSeriesMap().size()<1)
+            for (int i = 0; i < CA1Dref.states_number ; i++) {
+                population_chart.addSeries("state "+(i),new double[] { 0 }, new double[] { 0 })
+                        .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line).setMarker(SeriesMarkers.NONE);
+            }
     }
 
     public void plot() {
