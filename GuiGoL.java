@@ -174,7 +174,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static JTextField[] input_variables_textfields;
     private static JLabel [] input_variables_labels;
     private static JLabel [] combobox_labels= {new JLabel("Initializer mode")};
-    private static JLabel [] radio_button_labels = { new JLabel("Cilindric Frontier")};
+//    private static JLabel [] radio_button_labels = { new JLabel("Cilindric Frontier")};
 
     private static void initializeInputTextFieldsAndLabels(){
         // Todo bug if dimension is not equal to 600 fix main canvas
@@ -209,7 +209,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
         cilindric_frontier_buttons = createRadioButton(round_buttons_options,cilindric_frontier);
 
         addLabelTextRows(input_variables_labels,input_variables_textfields, combobox_labels, combo_box_list,
-                radio_button_labels, cilindric_frontier_buttons,
+                null, cilindric_frontier_buttons,
                 input_variables_pane);
 
         input_variables_pane.setBorder(
@@ -274,22 +274,22 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
             container.add(combo_box_list[i], c);
         }
 
-        GuiGoL.radio_button_labels[0].setFont(new Font(null, Font.PLAIN,20));
-        c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
-        c.fill = GridBagConstraints.NONE;      //reset to default
-        c.weightx = 1.0;                       //reset to default
-        container.add(GuiGoL.radio_button_labels[0], c);
-        c.gridwidth = GridBagConstraints.BASELINE_TRAILING;
-        c.fill = GridBagConstraints.REMAINDER;
-        c.weightx = 0;
-
-        Box horizontal = Box.createHorizontalBox();
-
-
-        for(Map.Entry<String,JRadioButton> button: radiobutton.entrySet()){
-            horizontal.add(button.getValue());
-        }
-        container.add(horizontal,c);
+//        GuiGoL.radio_button_labels[0].setFont(new Font(null, Font.PLAIN,20));
+//        c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
+//        c.fill = GridBagConstraints.NONE;      //reset to default
+//        c.weightx = 1.0;                       //reset to default
+//        container.add(GuiGoL.radio_button_labels[0], c);
+//        c.gridwidth = GridBagConstraints.BASELINE_TRAILING;
+//        c.fill = GridBagConstraints.REMAINDER;
+//        c.weightx = 0;
+//
+//        Box horizontal = Box.createHorizontalBox();
+//
+//
+//        for(Map.Entry<String,JRadioButton> button: radiobutton.entrySet()){
+//            horizontal.add(button.getValue());
+//        }
+//        container.add(horizontal,c);
 
     }
 
