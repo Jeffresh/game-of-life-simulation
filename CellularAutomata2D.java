@@ -275,14 +275,13 @@ public class CellularAutomata2D implements Runnable
             this.local_population_counter[i]=0;
         }
 
-        for (int i = in; i < fn; i++) {
-            if(abort)
-                break;
-            int j = 0;
-
-//
-            local_population_counter[nextGen[i][j]]++;
-        }
+        for(int i = 0; i< width; i++)
+            for (int j = in; j < fn; j++) {
+                if(abort)
+                    break;
+                nextGen[i][j] = getCellValue(i,j);
+                local_population_counter[nextGen[i][j]]++;
+            }
 
         return population;
     }
