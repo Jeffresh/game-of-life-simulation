@@ -21,6 +21,7 @@ public class CellularAutomata2D implements Runnable
 
     private static int[][] matrix;
     private static  int[][] actualGen, nextGen;
+    private static int[] initialPopulation;
     public static AtomicIntegerArray population_counter;
     private int [] local_population_counter;
     private static LinkedList<Double>[] population;
@@ -150,10 +151,13 @@ public class CellularAutomata2D implements Runnable
     }
 
     private static void randomInitializer() {
-        int nCells = height*height-100;
+        int nCells = (height*height)/2;
         for(int i=0; i < nCells; i++) {
             actualGen[randomGenerator.nextInt(height)][randomGenerator.nextInt(height)]=1;
         }
+
+        initialPopulation[0]= height*height - nCells;
+        initialPopulation[1]= nCells;
 
     }
 
@@ -181,6 +185,7 @@ public class CellularAutomata2D implements Runnable
             default:
 
         }
+
     }
 
     public void initializer (int cells_number, int generations, int cfrontier, String initializerMode ) {
@@ -200,12 +205,19 @@ public class CellularAutomata2D implements Runnable
         CellularAutomata2D.initializerMode = initializerMode;
 
         population = new LinkedList[states_number];
-        CellularAutomata2D.initializeState(initializerMode);
+        initialPopulation = new int[states_number];
 
+        CellularAutomata2D.initializeState(initializerMode);
 
         for (int i = 0; i < states_number; i++) {
             population[i] = new LinkedList<Double>();
         }
+
+        for (int j = 0; j < states_number; j++) {
+            population[j].add((double)initialPopulation[j]);
+        }
+        if(CellularAutomata2D.population_chart_ref != null)
+            CellularAutomata2D.population_chart_ref.plot();
 
 
     }
