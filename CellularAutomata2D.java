@@ -160,10 +160,12 @@ public class CellularAutomata2D implements Runnable
 
     }
 
+    //TODO: Implement random Island initializer
     private static void randomIslandInitializer() {
 
     }
 
+    //TODO: Implement glider gun initializer
     private static void gliderGunInitializer() {
 
     }
@@ -231,6 +233,19 @@ public class CellularAutomata2D implements Runnable
 
     private int computeVonNeumannNeighborhood(int i, int j) {
         int cellsAlive = 0 ;
+
+        if(cfrontier==0) {
+            for(int x = i-1; x<=i+1; x++) {
+                for(int y = j-1; y<=j+1; y++) {
+                    if((x >= 0 && x < width) && (y >= 0 && y < width) && (( x != i) || (y != j)) && (actualGen[x][y] == 1))
+                        cellsAlive ++;
+                }
+            }
+        }
+        else{
+            //TODO: implement cilindrical frontier
+        }
+
         return cellsAlive;
     }
 
@@ -246,7 +261,6 @@ public class CellularAutomata2D implements Runnable
 
         return transitionFunctionValue;
     }
-
 
     public int getCellValue(int i, int j){
         int cellsAlive = computeVonNeumannNeighborhood(i,j);
@@ -266,38 +280,7 @@ public class CellularAutomata2D implements Runnable
                 break;
             int j = 0;
 
-//            if(cfrontier == 0)
-//                j =(i + neighborhood_range) % width;
-//            else
-//                j = (i + neighborhood_range >= width) ?
-//                        i + neighborhood_range  - width : i + neighborhood_range ;
-
-            int irule = 0;
-            int exp = 0;
-
-//            while(exp < neighborhood_range *2 +1){
-//                if(cfrontier == 0) {
-//                    if (j < cells_number && j > 0)
-//                        irule = irule + CellularAutomata2D.actual_gen[j] * (int) Math.pow(states_number, exp);
-//                    exp++;
-//                    j = (j == 0) ? 0 : j - 1;
-//                }
-//                else {
-//                    irule = irule + CellularAutomata2D.actual_gen[j] * (int)Math.pow(states_number,exp);
-//                    exp ++;
-//                    j = ( j== 0) ? ( j - 1 + cells_number) : j - 1;
-//                }
-//            }
-
-//            if (irule >= binary_rule.length) {
-//                CellularAutomata2D.next_gen[i] = 0;
-//                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
-//            }
-//            else {
-//                CellularAutomata2D.next_gen[i] = binary_rule[irule];
-//                matrix[i][actual_gen + 1] = CellularAutomata2D.next_gen[i];
-//            }
-
+//
             local_population_counter[nextGen[i][j]]++;
         }
 

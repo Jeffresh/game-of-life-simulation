@@ -75,7 +75,6 @@ public class AnalyticsMultiChart {
         chart_frame.setSize(600,600);
         chart_frame.setMaximumSize(new Dimension(200,600));
 
-
         chart_frame.setAlwaysOnTop(true);
         chart_frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         chart_frame.setTitle(chart_title);
