@@ -180,6 +180,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static void initializeInputTextFieldsAndLabels(){
         textfields_and_labels.put("Dimension (NxN): ", "200");//2
         textfields_and_labels.put("Generations: ", "600");//3
+        textfields_and_labels.put("Scale Image: ", "1");
         combobox_labels[0].setLabelFor(generator_list_combo_box);
     }
     private static void initializeButtonNames(){
@@ -362,6 +363,7 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
     private static int cfrontier = 0;
     private static int cells_number = 600;
     private static int generations = 600;
+    private static double scaleImage = 1;
 
 
     public void actionPerformed( ActionEvent e) {
@@ -421,6 +423,10 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
             MainCanvas.task.plug(canvas_template);
             MainCanvas.task.initializer(cells_number, generations, cfrontier , initializer_mode);
             MainCanvas.setDimensions(cells_number, cells_number);
+            if (scaleImage >=1){
+                MainCanvas.setScaleRate(scaleImage);
+            }
+
             if (population_chart != null){
                 population_chart.setRef(MainCanvas.task);
                 MainCanvas.task.plugPopulationChart(population_chart);
@@ -429,6 +435,8 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 
             System.out.println("Cells number: "+cells_number);
             System.out.println("Generations: "+generations);
+            System.out.println("Scale Image: "+scaleImage);
+
             System.out.println("Initializer mode: "+initializer_mode);
 
 
@@ -516,6 +524,12 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
+
+        if(e.getSource() == input_variables_textfields[2]) {
+            nump = input_variables_textfields[2].getText();
+             scaleImage = Double.parseDouble(nump);
+        }
+
 
         if(e.getSource() == generator_list_combo_box) {
             JComboBox<String> cb = (JComboBox<String>)e.getSource();

@@ -17,7 +17,7 @@ class MainCanvas extends JPanel {
     /** Object of the class that Needs Visualization (ONV)  */
     public static CellularAutomata2D task;
     public static BufferedImage image_ref;
-    public static int scale_rate =1;
+    public static double scale_rate =1;
     public static int xMax;
     public static int yMax;
 
@@ -25,8 +25,11 @@ class MainCanvas extends JPanel {
         this.validate();
         this.repaint();
     }
+    public static void setScaleRate(double scaleRate){
+        scale_rate = scaleRate;
+    }
 
-    public BufferedImage scaleImage(int scale_rate){
+    public BufferedImage scaleImage(double scale_rate){
         BufferedImage mask = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
         AffineTransform at = new AffineTransform();
         at.scale(scale_rate, scale_rate);
@@ -93,7 +96,7 @@ class MainCanvas extends JPanel {
             }
         }
 
-        if(scale_rate>1)
+        if(scale_rate>=1)
             return scaleImage(scale_rate);
 
         return image_ref;
