@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 /**
  * CanvasClassTemplate.java
  * Purpose: generic Class that represent the canvas where you will show the stuff.
@@ -16,6 +17,7 @@ class MainCanvas extends JPanel {
     /** Object of the class that Needs Visualization (ONV)  */
     public static CellularAutomata2D task;
     public static BufferedImage image_ref;
+    public static int scale_rate =1;
     public static int xMax;
     public static int yMax;
 
@@ -23,6 +25,20 @@ class MainCanvas extends JPanel {
         this.validate();
         this.repaint();
     }
+
+    public BufferedImage scaleImage(int scale_rate){
+        BufferedImage mask = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.scale(scale_rate, scale_rate);
+        AffineTransformOp scaleOp =
+                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        image_ref = scaleOp.filter(image_ref, mask);
+
+        return image_ref;
+
+    }
+
+
 
     /** Constructor of the class that works as a link between the classNV and the GUI */
     public MainCanvas(int x_max, int y_max) {
@@ -76,6 +92,9 @@ class MainCanvas extends JPanel {
                 image_ref.setRGB(x, y, color.getRGB());
             }
         }
+
+        if(scale_rate>1)
+            return scaleImage(scale_rate);
 
         return image_ref;
     }
