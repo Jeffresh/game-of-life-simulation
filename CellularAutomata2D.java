@@ -101,6 +101,10 @@ public class CellularAutomata2D implements Runnable
 
     }
 
+    public int[] getInitialPopulation(){
+        return initialPopulation;
+    }
+
     public CellularAutomata2D() {}
 
     public CellularAutomata2D(int i) {
@@ -180,13 +184,14 @@ public class CellularAutomata2D implements Runnable
                         if(randomGenerator.nextInt(2)<1) {
                             actualGen[x][y] = 1;
                             initialPopulation[1]++;
-                        }else{
-                            initialPopulation[0]++;
                         }
                     }
                 }
 
         }
+
+        initialPopulation[0] = height*height-initialPopulation[1];
+
 
 
     }

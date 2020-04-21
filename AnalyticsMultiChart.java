@@ -54,9 +54,10 @@ public class AnalyticsMultiChart {
     }
 
     public void createSeries() {
+        int[] initialValues = CA1Dref.getInitialPopulation();
        if(population_chart.getSeriesMap().size()<1)
             for (int i = 0; i < CA1Dref.states_number ; i++) {
-                population_chart.addSeries("state "+(i),new double[] { 0 }, new double[] { 0 })
+                population_chart.addSeries("state "+(i),new double[]{0}, new double[]{initialValues[i]})
                         .setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line).setMarker(SeriesMarkers.NONE);
             }
     }
