@@ -19,6 +19,7 @@ import java.util.Map;
 
 public class GuiGoL extends Frame implements ActionListener, FocusListener {
 
+
     private static final long serialVersionUID = 1L;
 
     private static JMenuBar nav_bar;
@@ -469,10 +470,27 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
 	}
 	public void focusLost(FocusEvent e) {
         String nump;
-        if(e.getSource() == input_variables_textfields[0]) {
-            nump = input_variables_textfields[0].getText();
-            string_var = nump;
-            cells_number = Integer.parseInt(nump);
+        try {
+            double nump_value;
+            if (e.getSource() == input_variables_textfields[0]) {
+                nump = input_variables_textfields[0].getText();
+                nump_value = Double.parseDouble(nump);
+                if (nump.equals("") || (nump_value < 0 || nump_value >1000)) {
+                    numeric_var = 0;
+                    cells_number = 200;
+                    throw new Exception("Invalid Number");
+                }
+                else{
+                    cells_number = Integer.parseInt(nump);
+                }
+            }
+        }
+        catch (Exception ex){
+            String message = "\"Invalid Number\"\n"
+                    + "Enter a number between 200 and 1000\n"
+                    + " setted 200 by default";
+            JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
         //Neighborhood Range
@@ -481,17 +499,20 @@ public class GuiGoL extends Frame implements ActionListener, FocusListener {
                 if (e.getSource() == input_variables_textfields[1]) {
                     nump = input_variables_textfields[1].getText();
                     nump_value = Double.parseDouble(nump);
-                    if (nump.equals("") || (nump_value < 0 || nump_value >=1000)) {
-                        numeric_var = 0;
+                    if (nump.equals("") || (nump_value < 1)) {
+                        numeric_var = 600;
+                        generations= 600;
                         throw new Exception("Invalid Number");
                     }
-                    generations = Integer.parseInt(nump);
+                    else {
+                        generations = Integer.parseInt(nump);
+                    }
                 }
             }
             catch (Exception ex){
                 String message = "\"Invalid Number\"\n"
-                        + "Enter a number between 0 and 1000\n"
-                        + " setted 0 by default";
+                        + "Enter a number greater than 0\n"
+                        + " setted 600 by default";
                 JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
                         JOptionPane.ERROR_MESSAGE);
             }
