@@ -30,7 +30,7 @@ class MainCanvas extends JPanel {
     }
 
     public BufferedImage scaleImage(double scale_rate){
-        BufferedImage mask = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage mask = new BufferedImage(xMax, yMax, BufferedImage.TYPE_INT_ARGB);
         AffineTransform at = new AffineTransform();
         at.scale(scale_rate, scale_rate);
         AffineTransformOp scaleOp =
